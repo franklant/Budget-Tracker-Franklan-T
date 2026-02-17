@@ -278,6 +278,8 @@ function clearGeneralSpending() {
 
     generalSpendingAmounts = [];
 
+    // due to this being a live list, the removal of one element will shift the other elements to fill in it's place. This causes items to be skipped when deleting.
+    // Because of this it's better to delete items starting from the last element in the array, to avoid skipping any other element items. 
     for (let i = children.length - 1; i >= 1; i--) {
         GS_TABLE.removeChild(children.item(i));
     }
