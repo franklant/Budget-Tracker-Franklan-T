@@ -1,0 +1,87 @@
+body {
+    background: linear-gradient(-45deg, #a3e3a7, #ffc3a0, #e4ff36, #f17a04);
+    background-size: 400% 400%;
+    
+    /* Attach the animation */
+    animation: gradientBG 15s ease infinite;
+
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+body > div {
+    background-color: rgb(193, 193, 193, 0.5);
+    margin-bottom: 50px;
+    margin-top: 5px; 
+
+    border: 3px solid rgba(97, 97, 97, 0.5);
+    justify-items: center;
+    text-align: center;
+
+    padding-bottom: 10px;
+}
+
+div > h3 {
+    /* border: 1px solid black;  */
+    border-bottom: 2px solid black; 
+}
+
+div > div {
+    /* background-color:; */
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.5); 
+}
+
+button {
+    border: 1px solid white;
+    border-radius: 3px;
+    background-color: rgba(109, 109, 109, 0.4);
+}
+
+/* Hover state */
+button:hover {
+    border: 1px solid white;
+    border-radius: 3px;
+    background-color: rgba(200, 200, 200, 0.4);
+    color: white;
+}
+
+/* Active (pressed) state */
+button:active {
+    border: 1px solid white;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid white;
+}
+
+th {
+    background-color: green;
+    color: white;
+    min-width: 200px;
+}
+
+td {
+    background-color: rgb(255, 229, 192, 0.7);
+    min-width: 200px;
+}
+
+#gs-limit-exceeded, #g-limit-exceeded, #s-limit-exceeded {
+    color: red;
+    background-color: rgb(255, 143, 143);
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

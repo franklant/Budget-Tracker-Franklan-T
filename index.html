@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="icon" type="image/x-icon" href="./images/budget-tracker-icon.png">
+</head>
+<body>
+    <div class="header-container">
+        <h1>Budget Tracker</h1>
+        * Next thing to add could be a value that shows how much money you'll have until you reach or surpass your budget.
+    </div>
+
+    <div class="content-container">
+        <!-- Create budgeting categories (Savings, Spending, Groceries, etc.) -->
+        <!-- Allocate a max budget for each category -->
+        <!-- Allow the user add entries for each category based off of what they spend -->
+        <!-- If the total of each entry in each category surpasses that categories
+             max budget, then display that to the user -->
+        <h3>General Spending</h3>
+        <p>Limit: $<span id="general-spending-limit">100</span></p>
+        <p id="gs-limit-exceeded"></p>
+
+        <div id="general-spending-container">
+            <p>Transaction History:</p>
+            <table id="general-spending-table" style="margin-bottom: 25px;">
+                <tr>
+                    <th>Amount ($)</th>
+                    <th>Notes</th>
+                </tr>
+            </table>
+
+            <button id="gs-button" onclick="addGeneralSpendingEntry()">Add Entry</button>
+            <button id="gs-limit-button" onclick="setGeneralSpendingLimit()">Set Limit</button>
+            <button id="gs-clear-button" onclick="clearGeneralSpending()">Clear</button>
+        </div>
+
+        <h3>Groceries</h3>
+        <p>Limit: $<span id="grocery-limit">100</span></p>
+        <p id="g-limit-exceeded"></p>
+
+        <div id="groceries-container">
+            <!-- Entries go here -->
+            <p>Transaction History:</p>
+            <table id="grocery-table" style="margin-bottom: 25px;">
+                <tr>
+                    <th>Amount ($)</th>
+                    <th>Notes</th>
+                </tr>
+            </table>
+
+            <button id="g-button" onclick="addGroceryEntry()">Add Entry</button>
+            <button id="g-limit-button" onclick="setGroceryLimit()">Set Limit</button>
+            <button id="gs-clear-button" onclick="clearGroceries()">Clear</button>
+        </div>
+
+        <h3>Savings</h3>
+        <p>Limit: $<span id="savings-limit">100</span></p>
+        <p id="s-limit-exceeded"></p>
+
+        <div id="savings-container">
+            <!-- Entries go here -->
+            <p>Transaction History:</p>
+            <table id="savings-table" style="margin-bottom: 25px;">
+                <tr>
+                    <th>Amount ($)</th>
+                    <th>Notes</th>
+                </tr>
+            </table>
+            
+            <button id="s-button" onclick="addSavingEntry()">Add Entry</button>
+            <button id="s-limit-button" onclick="setSavingsLimit()">Set Limit</button>
+            <button id="gs-clear-button" onclick="clearSavings()">Clear</button>
+        </div>
+    </div>
+
+    <div class="footer-container">
+        <h1 style="font-style: italic;">Franklan Taylor @ 2026</h1>
+    </div>
+
+    <!-- <script src="./js/helpers.js" type="module"></script> -->
+    <script src="./js/budgetManager.js"></script>
+</body>
+</html>
