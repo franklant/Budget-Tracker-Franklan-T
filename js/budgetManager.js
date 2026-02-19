@@ -19,8 +19,110 @@ let g_budget = 0;
 let s_budget = 0;
 
 let generalSpendingAmounts = [];
+let generalSpendingNotes = [];
+
 let groceryAmounts = [];
+let groceryNotes = [];
+
 let savingsAmounts = [];
+let savingsNotes = [];
+
+// retrieve previously set budget limits if available, on load.
+window.onload = function() {
+    // get budgets
+    let generalSpendingBudget = localStorage.getItem("generalSpendingBudget");
+    let groceryBudget = localStorage.getItem("groceryBudget");
+    let savingsBudget = localStorage.getItem("savingsBudget");
+
+    // get transaction amounts
+    generalSpendingAmounts = JSON.parse(localStorage.getItem("generalSpendingAmounts"));
+    groceryAmounts = JSON.parse(localStorage.getItem("groceryAmounts"));
+    savingsAmounts = JSON.parse(localStorage.getItem("savingsAmounts"));
+
+    // get transaction notes (there is most likely NO notes if there are NO transaction amounts)
+    generalSpendingNotes = JSON.parse(localStorage.getItem("generalSpendingNotes"));
+    groceryNotes = JSON.parse(localStorage.getItem("groceryNotes"));
+    savingsNotes = JSON.parse(localStorage.getItem("savingsNotes"));
+
+    // if a value has been retrieved, set it.
+    if (generalSpendingBudget) {
+        GS_BUDGET.innerHTML = generalSpendingBudget;
+    }
+
+    if (groceryBudget) {
+        G_BUDGET.innerHTML = groceryBudget;
+    }
+    
+    if (savingsBudget) {
+        S_BUDGET.innerHTML = savingsBudget;
+    }
+
+    // if we got some data back, populate the table with the saved data.
+    if (!generalSpendingAmounts) {
+        generalSpendingAmounts = [];
+        generalSpendingNotes = [];
+    } else {     
+        for (let i = 0; i < generalSpendingAmounts.length; i++) {
+            // create the table elements
+            let row = document.createElement("tr");
+            let data1 = document.createElement("td");
+            let data2 = document.createElement("td");
+
+            // insert data to the table elements
+            data1.innerHTML = generalSpendingAmounts[i];
+            data2.innerHTML = generalSpendingNotes[i];
+
+            // add new rows to the table
+            row.insertBefore(data2, null);
+            row.insertBefore(data1, data2);
+            GS_TABLE.insertBefore(row, null);
+        }
+    }
+
+    // if we got some data back, populate the table with the saved data.
+    if (!groceryAmounts) {
+        groceryAmounts = [];
+        groceryNotes = [];
+    } else {
+        for (let i = 0; i < groceryAmounts.length; i++) {
+            // create the table elements
+            let row = document.createElement("tr");
+            let data1 = document.createElement("td");
+            let data2 = document.createElement("td");
+
+            // insert data to the table elements
+            data1.innerHTML = groceryAmounts[i];
+            data2.innerHTML = groceryNotes[i];
+
+            // add new rows to the table
+            row.insertBefore(data2, null);
+            row.insertBefore(data1, data2);
+            G_TABLE.insertBefore(row, null);
+        }
+    }
+
+    // if we got some data back, populate the table with saved data.
+    if (!savingsAmounts) {
+        savingsAmounts = [];
+        savingsNotes = [];
+    } else {
+        for (let i = 0; i < savingsAmounts.length; i++) {
+            // create the table elements
+            let row = document.createElement("tr");
+            let data1 = document.createElement("td");
+            let data2 = document.createElement("td");
+
+            // insert data to the table elements
+            data1.innerHTML = savingsAmounts[i];
+            data2.innerHTML = savingsNotes[i];
+
+            // add new rows to the table
+            row.insertBefore(data2, null);
+            row.insertBefore(data1, data2);
+            S_TABLE.insertBefore(row, null);
+        }
+    }
+}
 
 
 /////// FUNCTIONS ///////
@@ -38,6 +140,12 @@ function sumArray(array) {
     }
 
     return sum;
+}
+
+function calculateAmountLeft() {
+    // take the current budget amount and subtract the current transaction from it. 
+    // return the new amount left
+
 }
 
 function checkBudgetExceeded(totalAmount, limit, limitExceededElement) {
@@ -90,7 +198,14 @@ function addGeneralSpendingEntry() {
 
     // update amount array
     generalSpendingAmounts.push(amountData);
+    generalSpendingNotes.push(noteData);
     console.log(generalSpendingAmounts);
+    console.log(generalSpendingNotes);
+
+    // save these arrays to local storage
+    // use JSON.stringify to properly save array data and parse it later on
+    localStorage.setItem("generalSpendingAmounts", JSON.stringify(generalSpendingAmounts));
+    localStorage.setItem("generalSpendingNotes", JSON.stringify(generalSpendingNotes));
 
     // add new row to the table
     row.insertBefore(data2, null);
@@ -146,7 +261,13 @@ function addGroceryEntry() {
 
     // update amount array
     groceryAmounts.push(amountData);
+    groceryNotes.push(noteData);
     console.log(groceryAmounts);
+    console.log(groceryNotes);
+
+    // save these arrays to local storage
+    localStorage.setItem("groceryAmounts", JSON.stringify(groceryAmounts));
+    localStorage.setItem("groceryNotes", JSON.stringify(groceryNotes));
 
     // add new row to the table
     row.insertBefore(data2, null);
@@ -202,7 +323,13 @@ function addSavingEntry() {
 
     // update amount array
     savingsAmounts.push(amountData);
+    savingsNotes.push(noteData);
     console.log(savingsAmounts);
+    console.log(savingsNotes);
+
+    // save these arrays to local storage
+    localStorage.setItem("savingsAmounts", JSON.stringify(savingsAmounts));
+    localStorage.setItem("savingsNotes", JSON.stringify(savingsNotes));
 
     // add new row to the table
     row.insertBefore(data2, null);
@@ -228,6 +355,9 @@ function setGeneralSpendingLimit() {
 
     GS_BUDGET.innerHTML = newBudget;
 
+    // save the new value in local storage
+    localStorage.setItem("generalSpendingBudget", newBudget);
+
     checkBudgetExceeded(
         sumArray(generalSpendingAmounts), 
         +(GS_BUDGET.innerHTML), 
@@ -246,6 +376,9 @@ function setGroceryLimit() {
     }
 
     G_BUDGET.innerHTML = newBudget;
+
+    // save the new value in local storage
+    localStorage.setItem("groceryBudget", newBudget);
 
     checkBudgetExceeded(
         sumArray(groceryAmounts), 
@@ -266,6 +399,9 @@ function setSavingsLimit() {
 
     S_BUDGET.innerHTML = newBudget;
 
+    // save the new value in local storage
+    localStorage.setItem("savingsBudget", newBudget);
+
     checkBudgetExceeded(
         sumArray(savingsAmounts), 
         +(S_BUDGET.innerHTML), 
@@ -277,6 +413,11 @@ function clearGeneralSpending() {
     let children = GS_TABLE.children;
 
     generalSpendingAmounts = [];
+    generalSpendingNotes = [];
+
+    // save these arrays to local storage
+    localStorage.setItem("generalSpendingAmounts", JSON.stringify(generalSpendingAmounts));
+    localStorage.setItem("generalSpendingNotes", JSON.stringify(generalSpendingNotes));
 
     // due to this being a live list, the removal of one element will shift the other elements to fill in it's place. This causes items to be skipped when deleting.
     // Because of this it's better to delete items starting from the last element in the array, to avoid skipping any other element items. 
@@ -295,6 +436,11 @@ function clearGroceries() {
     let children = G_TABLE.children;
 
     groceryAmounts = [];
+    groceryNotes = [];
+
+    // save these arrays to local storage
+    localStorage.setItem("groceryAmounts", JSON.stringify(groceryAmounts));
+    localStorage.setItem("groceryNotes", JSON.stringify(groceryNotes));
     
     for (let i = children.length - 1; i >= 1; i--) {
         G_TABLE.removeChild(children.item(i));
@@ -311,6 +457,11 @@ function clearSavings() {
     let children = S_TABLE.children;
 
     savingsAmounts = [];
+    savingsNotes = [];
+
+    // save these arrays to local storage
+    localStorage.setItem("savingsAmounts", JSON.stringify(savingsAmounts));
+    localStorage.setItem("savingsNotes", JSON.stringify(savingsNotes));
     
     for (let i = children.length - 1; i >= 1; i--) {
         S_TABLE.removeChild(children.item(i));
