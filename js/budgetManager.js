@@ -13,6 +13,11 @@ const GS_BUDGET = document.getElementById("general-spending-limit");
 const G_BUDGET = document.getElementById("grocery-limit");
 const S_BUDGET = document.getElementById("savings-limit");
 
+// Get the budget-left dispay from the DOM
+const GS_LEFT = document.getElementById("general-spending-left");
+const G_LEFT = document.getElementById("grocery-left");
+const S_LEFT = document.getElementById("savings-left");
+
 /////// GLOBALS ///////
 let gs_budget = 0;
 let g_budget = 0;
@@ -77,6 +82,10 @@ window.onload = function() {
             row.insertBefore(data1, data2);
             GS_TABLE.insertBefore(row, null);
         }
+
+        // console.log("General Spending: ");
+        // console.log(calculateAmountLeft(+(GS_BUDGET.innerHTML), generalSpendingAmounts));
+        GS_LEFT.innerHTML = calculateAmountLeft(+(GS_BUDGET.innerHTML), generalSpendingAmounts);
     }
 
     // if we got some data back, populate the table with the saved data.
@@ -99,6 +108,10 @@ window.onload = function() {
             row.insertBefore(data1, data2);
             G_TABLE.insertBefore(row, null);
         }
+
+        // console.log("Grocery: ");
+        // console.log(calculateAmountLeft(+(G_BUDGET.innerHTML), groceryAmounts));
+        G_LEFT.innerHTML = calculateAmountLeft(+(G_BUDGET.innerHTML), groceryAmounts);
     }
 
     // if we got some data back, populate the table with saved data.
@@ -121,6 +134,10 @@ window.onload = function() {
             row.insertBefore(data1, data2);
             S_TABLE.insertBefore(row, null);
         }
+
+        // console.log("Savings: ");
+        // console.log(calculateAmountLeft(+(S_BUDGET.innerHTML), groceryAmounts));
+        S_LEFT.innerHTML = calculateAmountLeft(+(S_BUDGET.innerHTML), groceryAmounts);
     }
 }
 
@@ -142,12 +159,13 @@ function sumArray(array) {
     return sum;
 }
 
-function calculateAmountLeft() {
-    // take the current budget amount and subtract the current transaction from it. 
-    // return the new amount left
-
+// take the current budget amount and subtract the total transaction amounts from it. 
+// return the new amount left
+function calculateAmountLeft(budgetLimit, amountArray) {
+    return budgetLimit - sumArray(amountArray);
 }
 
+// everytime we check if the budget exceeds, we can update the amount remaining
 function checkBudgetExceeded(totalAmount, limit, limitExceededElement) {
     if (totalAmount > limit) {
         limitExceededElement.innerHTML = "Budget has been exceeded.";
@@ -217,6 +235,8 @@ function addGeneralSpendingEntry() {
         +(GS_BUDGET.innerHTML), 
         document.getElementById("gs-limit-exceeded")
     );
+
+    GS_LEFT.innerHTML = calculateAmountLeft(+(GS_BUDGET.innerHTML), generalSpendingAmounts);
 }
 
 function addGroceryEntry() {
@@ -279,6 +299,8 @@ function addGroceryEntry() {
         +(G_BUDGET.innerHTML), 
         document.getElementById("g-limit-exceeded")
     );
+
+    G_LEFT.innerHTML = calculateAmountLeft(+(G_BUDGET.innerHTML), groceryAmounts);
 }
 
 function addSavingEntry() {
@@ -341,6 +363,8 @@ function addSavingEntry() {
         +(S_BUDGET.innerHTML), 
         document.getElementById("s-limit-exceeded")
     );
+
+    S_LEFT.innerHTML = calculateAmountLeft(+(S_BUDGET.innerHTML), savingsAmounts);
 }
 
 function setGeneralSpendingLimit() {
@@ -363,6 +387,8 @@ function setGeneralSpendingLimit() {
         +(GS_BUDGET.innerHTML), 
         document.getElementById("gs-limit-exceeded")
     );
+
+    GS_LEFT.innerHTML = calculateAmountLeft(+(GS_BUDGET.innerHTML), generalSpendingAmounts);
 }
 
 function setGroceryLimit() {
@@ -385,6 +411,8 @@ function setGroceryLimit() {
         +(G_BUDGET.innerHTML), 
         document.getElementById("g-limit-exceeded")
     );
+
+    G_LEFT.innerHTML = calculateAmountLeft(+(G_BUDGET.innerHTML), groceryAmounts);
 }
 
 function setSavingsLimit() {
@@ -407,6 +435,8 @@ function setSavingsLimit() {
         +(S_BUDGET.innerHTML), 
         document.getElementById("s-limit-exceeded")
     );
+
+    S_LEFT.innerHTML = calculateAmountLeft(+(S_BUDGET.innerHTML), savingsAmounts);
 }
 
 function clearGeneralSpending() {
@@ -430,6 +460,8 @@ function clearGeneralSpending() {
         +(GS_BUDGET.innerHTML), 
         document.getElementById("gs-limit-exceeded")
     );
+
+    GS_LEFT.innerHTML = calculateAmountLeft(+(GS_BUDGET.innerHTML), generalSpendingAmounts);
 }
 
 function clearGroceries() {
@@ -451,6 +483,8 @@ function clearGroceries() {
         +(G_BUDGET.innerHTML), 
         document.getElementById("g-limit-exceeded")
     );
+
+    G_LEFT.innerHTML = calculateAmountLeft(+(G_BUDGET.innerHTML), groceryAmounts);
 }
 
 function clearSavings() {
@@ -472,4 +506,6 @@ function clearSavings() {
         +(S_BUDGET.innerHTML), 
         document.getElementById("s-limit-exceeded")
     );
+
+    S_LEFT.innerHTML = calculateAmountLeft(+(S_BUDGET.innerHTML), savingsAmounts);
 }
