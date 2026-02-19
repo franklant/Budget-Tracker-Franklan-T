@@ -66,7 +66,7 @@ window.onload = function() {
     if (!generalSpendingAmounts) {
         generalSpendingAmounts = [];
         generalSpendingNotes = [];
-        GS_LEFT.innerHTML = 0;
+        GS_LEFT.innerHTML = GS_BUDGET.innerHTML;
     } else {     
         for (let i = 0; i < generalSpendingAmounts.length; i++) {
             // create the table elements
@@ -93,7 +93,7 @@ window.onload = function() {
     if (!groceryAmounts) {
         groceryAmounts = [];
         groceryNotes = [];
-        G_LEFT.innerHTML = 0;
+        G_LEFT.innerHTML = G_BUDGET.innerHTML;
     } else {
         for (let i = 0; i < groceryAmounts.length; i++) {
             // create the table elements
@@ -120,7 +120,7 @@ window.onload = function() {
     if (!savingsAmounts) {
         savingsAmounts = [];
         savingsNotes = [];
-        S_LEFT.innerHTML = 0;
+        S_LEFT.innerHTML = S_BUDGET.innerHTML;
     } else {
         for (let i = 0; i < savingsAmounts.length; i++) {
             // create the table elements
